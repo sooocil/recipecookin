@@ -7,32 +7,42 @@ import { getAllRecipes } from "@/utils/actions/getAllRecipes";
 import { Eye, Heart } from "lucide-react";
 import { useRecipeStore } from "@/store/homeRecipeStore";
 import { Recipe } from "@/types/Recipe";
+import { forwardRef } from "react";
 
-const RecipeGrid = () => {
-  const { recipes, lastFetched, setRecipes } = useRecipeStore();
-
+const RecipeGrid = forwardRef<HTMLDivElement>((props, ref) => {
+  const { recipes, lastFetched, page, setRecipes, setPage } = useRecipeStore();
+ const recipesPerPage = 8;
+  
   const shouldRefetch =
-    !lastFetched || Date.now() - lastFetched > 1000 * 60 * 2; 
-
+    !lastFetched || Date.now() - lastFetched > 1000 * 60 * 2;
 
   const { data, isLoading, isError } = useQuery<Recipe[]>({
-    queryKey: ["recipes"],
-    queryFn: () => getAllRecipes(),
-    enabled: shouldRefetch,
+    queryKey: ["recipes", page],
+    queryFn: () => getAllRecipes(recipesPerPage, page * recipesPerPage),
+    enabled: shouldRefetch || page > 0,
     staleTime: 1000 * 60 * 5,
-
   });
 
-    useEffect(() => {
+    const handlePrevious = () => {
+    if (page > 0) {
+      setPage(page - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (data && data.length === recipesPerPage) {
+      setPage(page + 1);
+    }
+  };
+  useEffect(() => {
     if (data) {
       setRecipes(data);
     }
   }, [data, setRecipes]);
 
-
   if (isLoading)
     return (
-      <div>
+      <div  >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mx-20  mt-10 ">
           {Array.from({ length: 8 }).map((_, index) => (
             <div
@@ -51,15 +61,13 @@ const RecipeGrid = () => {
       </div>
     );
 
-    
-
   if (isError) return <p>Error fetching recipes</p>;
   if (!recipes?.length)
     return <p className="font-bold text-center">No recipes found.</p>;
 
   return (
-    <div className="my-10 ">
-      <h1 className="text-2xl font-bold text-center">Recipe List</h1>
+    <div ref={ref}  className="my-20  ">
+      <h1 className="text-4xl font-bold text-center">Random Recipe List</h1>
       <p className="text-bold text-zinc-600 text-center">
         Here are some recipe you can look into
       </p>
@@ -67,17 +75,23 @@ const RecipeGrid = () => {
         {recipes.map((recipe: Recipe) => (
           <div
             key={recipe.idMeal}
-            className="flex flex-col  border border-zinc-200 p-0 hover:scale-101  rounded hover:shadow-xl hover:cursor-pointer transition-all duration-300"
+            className="flex flex-col  border border-zinc-200 p-0   rounded hover:shadow-xl hover:cursor-pointer transition-all duration-300"
           >
             <Image
               width={600}
               height={100}
-              className="object-cover  rounded mx-auto "
+              className="object-cover  rounded mx-auto hover:scale-101 transition-transform duration-100"
               src={recipe.strMealThumb}
               alt={recipe.strMeal}
             />
             <div className="p-4">
-              <h3 className="font-bold">{recipe.strMeal}</h3>
+              <h3 className="font-bold text-lg">{recipe.strMeal}</h3>
+              <div className="flex flex-row gap-4 my-2 flex-wrap">
+                <span className="bg-green-100 text-green-900 text-sm px-2 py-1 rounded-full">
+                  category: {recipe.strCategory}
+                </span>
+                <span className="relative "> {recipe.strArea}</span>
+              </div>
               <p className="text-sm text-gray-600 ">
                 {recipe.strInstructions.slice(0, 100)}...
               </p>
@@ -109,11 +123,30 @@ const RecipeGrid = () => {
           </div>
         ))}
       </main>
-      <div className="underlined text-xl font-bold text-indigo-600 text-center m-20 mx-auto">
-        View More
+      <div className="flex justify-center gap-4 mt-8">
+        <button
+          onClick={handlePrevious}
+          disabled={page === 0 || isLoading}
+          className={`px-6 py-2 bg-indigo-600 text-white rounded-md ${
+            page === 0 || isLoading ? "opacity-50 cursor-not-allowed" : "hover:bg-indigo-700"
+          }`}
+        >
+          Previous
+        </button>
+        <button
+          onClick={handleNext}
+          disabled={isLoading || (data && data.length < recipesPerPage)}
+          className={`px-6 py-2 bg-indigo-600 text-white rounded-md ${
+            isLoading || (data && data.length < recipesPerPage)
+              ? "opacity-50 cursor-not-allowed"
+              : "hover:bg-indigo-700"
+          }`}
+        >
+          Next
+        </button>
       </div>
     </div>
   );
-};
+});
 
 export default RecipeGrid;

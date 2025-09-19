@@ -1,16 +1,18 @@
 import { create } from "zustand";
 import { Recipe } from "@/types/Recipe";
 
-
-type RecipeState = {
+interface RecipeStore {
   recipes: Recipe[];
   lastFetched: number | null;
+  page: number;
   setRecipes: (recipes: Recipe[]) => void;
-};
+  setPage: (page: number) => void;
+}
 
-export const useRecipeStore = create<RecipeState>((set) => ({
+export const useRecipeStore = create<RecipeStore>((set) => ({
   recipes: [],
   lastFetched: null,
-  setRecipes: (recipes) =>
-    set({ recipes, lastFetched: Date.now() }),
+  page: 0,
+  setRecipes: (recipes) => set({ recipes, lastFetched: Date.now() }),
+  setPage: (page) => set({ page }),
 }));

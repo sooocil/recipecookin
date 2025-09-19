@@ -1,11 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect  , useRef, useState } from "react";
 
 import HeroSection from "@/Components/HomeSections/HeroSection";
 import RecipeGrid from "@/Components/HomeSections/RecipeGrid";
+import HomeFooter from "@/Components/HomeSections/footer";
 
 export default function Home() {
+  const recipeGridRef = useRef<HTMLDivElement>(null);
+
   const [mounted, setMounted] = useState(false);
   
   useEffect(() => {
@@ -16,9 +19,9 @@ export default function Home() {
 
   return (
     <div className="inset-0 w-full h-screen ">
-      <HeroSection />
-      <RecipeGrid  />
-
+      <HeroSection recipeGridRef={recipeGridRef} />
+      <RecipeGrid ref={recipeGridRef} />
+      <HomeFooter />
     </div>
   );
 }

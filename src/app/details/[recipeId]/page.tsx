@@ -52,8 +52,11 @@ export default function Page({ params }: PageProps) {
         />
 
         <div className="flex flex-col gap-4 md:flex-1">
+
           <h1 className="text-2xl font-bold">{data.recipe.strMeal}</h1>
-          <p className="text-gray-600">{data.recipe.strInstructions}</p>
+          
+          <p>Procedure to make one:</p>
+          <p className="text-gray-600 "> {data.recipe.strInstructions}</p>
           <button
             onClick={addToFavourite}
             className="flex items-center gap-2 border px-4 py-2 rounded hover:bg-indigo-600 hover:text-white transition"
@@ -62,7 +65,7 @@ export default function Page({ params }: PageProps) {
             Add to Favourite
           </button>
         </div>
-      </div>
+      </div>  
 
       <div className="w-full max-w-4xl mt-10">
         <h2 className="text-xl font-bold mb-4">Ingredients</h2>

@@ -29,12 +29,7 @@ const NavBar = () => {
       </div>
 
       <div className="flex gap-6 justify-center items-center">
-        <Link
-          href="/recipes"
-          className=" text-lg  hover:underline hover:text-indigo-600 transition-all duration-200 "
-        >
-          All Recipes
-        </Link>
+        
         <Link
           href="/myrecipes"
           className=" text-lg  hover:underline hover:text-indigo-600 transition-all duration-200 "
