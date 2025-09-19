@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Recipe } from "@/types/Recipe";
+import { Recipe } from "@/types/Types";
 
 export async function getRecipeById(id: string): Promise<Recipe | null> {
   const response = await axios.get(

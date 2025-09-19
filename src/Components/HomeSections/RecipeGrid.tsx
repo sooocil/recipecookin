@@ -6,13 +6,15 @@ import Image from "next/image";
 import { getAllRecipes } from "@/utils/actions/getAllRecipes";
 import { Eye, Heart } from "lucide-react";
 import { useRecipeStore } from "@/store/homeRecipeStore";
-import { Recipe } from "@/types/Recipe";
+import { Recipe } from "@/types/Types";
 import { forwardRef } from "react";
+import { useFavouritesStore } from "@/store/favouriteStore";
+import { toast } from "sonner";
 
 const RecipeGrid = forwardRef<HTMLDivElement>((props, ref) => {
   const { recipes, lastFetched, page, setRecipes, setPage } = useRecipeStore();
- const recipesPerPage = 8;
-  
+  const recipesPerPage = 8;
+
   const shouldRefetch =
     !lastFetched || Date.now() - lastFetched > 1000 * 60 * 2;
 
@@ -23,7 +25,28 @@ const RecipeGrid = forwardRef<HTMLDivElement>((props, ref) => {
     staleTime: 1000 * 60 * 5,
   });
 
-    const handlePrevious = () => {
+  const {addFavourite} = useFavouritesStore();
+
+const addToFav = (id: string) => {
+  try {
+    addFavourite(id);
+    toast.success("Added to favourites! go to favourites page", {
+      duration: 4000,
+      style: {
+        backgroundColor: 'black',
+        color: 'white',
+        textSizeAdjust: '100%'
+      },
+    });
+
+  } catch (error) {
+    console.error("Error adding to favourites:", error);
+    alert("Failed to add to favourites. Please try again.");
+  }
+
+}
+
+  const handlePrevious = () => {
     if (page > 0) {
       setPage(page - 1);
     }
@@ -42,7 +65,7 @@ const RecipeGrid = forwardRef<HTMLDivElement>((props, ref) => {
 
   if (isLoading)
     return (
-      <div  >
+      <div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mx-20  mt-10 ">
           {Array.from({ length: 8 }).map((_, index) => (
             <div
@@ -66,7 +89,7 @@ const RecipeGrid = forwardRef<HTMLDivElement>((props, ref) => {
     return <p className="font-bold text-center">No recipes found.</p>;
 
   return (
-    <div ref={ref}  className="my-20  ">
+    <div ref={ref} className="my-20  ">
       <h1 className="text-4xl font-bold text-center">Random Recipe List</h1>
       <p className="text-bold text-zinc-600 text-center">
         Here are some recipe you can look into
@@ -87,10 +110,12 @@ const RecipeGrid = forwardRef<HTMLDivElement>((props, ref) => {
             <div className="p-4">
               <h3 className="font-bold text-lg">{recipe.strMeal}</h3>
               <div className="flex flex-row gap-4 my-2 flex-wrap">
-                <span className="bg-green-100 text-green-900 text-sm px-2 py-1 rounded-full">
-                  category: {recipe.strCategory}
+                <span className="bg-green-100 text-green-900 text-sm px-4  py-1 rounded-full">
+                  {recipe.strCategory}
                 </span>
-                <span className="relative "> {recipe.strArea}</span>
+                <span className="relative bg-red-100 text-orange-900 text-sm px-4 py-1 rounded-full">
+                  {recipe.strArea}
+                </span>
               </div>
               <p className="text-sm text-gray-600 ">
                 {recipe.strInstructions.slice(0, 100)}...
@@ -108,9 +133,7 @@ const RecipeGrid = forwardRef<HTMLDivElement>((props, ref) => {
                   View Recipe
                 </button>
                 <button
-                  onClick={() => {
-                    window.location.href = `/details/${recipe.idMeal}`;
-                  }}
+                  onClick={() => {addToFav(recipe.idMeal)}}
                   className="group flex flex-row gap-2 mt-auto border hover:cursor-pointer py-2 px-4 rounded hover:bg-indigo-600 hover:text-white transition-colors duration-300"
                 >
                   <span>
@@ -128,7 +151,9 @@ const RecipeGrid = forwardRef<HTMLDivElement>((props, ref) => {
           onClick={handlePrevious}
           disabled={page === 0 || isLoading}
           className={`px-6 py-2 bg-indigo-600 text-white rounded-md ${
-            page === 0 || isLoading ? "opacity-50 cursor-not-allowed" : "hover:bg-indigo-700"
+            page === 0 || isLoading
+              ? "opacity-50 cursor-not-allowed"
+              : "hover:bg-indigo-700"
           }`}
         >
           Previous

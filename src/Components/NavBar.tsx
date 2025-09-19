@@ -1,6 +1,6 @@
 "use client";
 
-import { Search } from "lucide-react";
+import { Heart, Plus, Search, User } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
@@ -32,14 +32,23 @@ const NavBar = () => {
         
         <Link
           href="/myrecipes"
-          className=" text-lg  hover:underline hover:text-indigo-600 transition-all duration-200 "
+          className="group flex gap-2 text-lg  hover:underline hover:text-indigo-600 transition-all duration-200 "
         >
+          <User className="group-hover:fill-indigo-600"/>
           My Recipes
         </Link>
+        <Link
+          href="/favourites"
+          className="group flex gap-2 items-center text-lg rounded-sm  px-4 py-2 hover:underline hover:text-indigo-600  transition-all duration-200 "
+        >
+            <Heart className="group-hover:fill-indigo-600" />
+          Favourites
+        </Link> 
         <Link
           href="/addrecipe"
           className=" text-lg rounded-sm bg-indigo-600 px-4 py-2 hover:bg-indigo-700 text-white transition-all duration-200 "
         >
+          <Plus className="inline-block mr-2 mb-1"/>
           Add Recipe
         </Link>
       </div>

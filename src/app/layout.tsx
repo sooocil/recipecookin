@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/Components/NavBar";
 import QueryProvider from "@/Components/QueryProvider";
+import { Toaster } from "sonner";
 
 
 
@@ -34,6 +35,13 @@ export default function RootLayout({
         <QueryProvider >
           {children}
         </QueryProvider>
+        <Toaster
+          position="bottom-center"
+          toastOptions={{
+            duration: 3000,
+          }}
+          richColors
+        />
       </body>
     </html>
   );

@@ -3,9 +3,9 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getRecipeById } from "@/utils/actions/getRecipeById";
-import { Recipe } from "@/types/Recipe";
+import { Recipe } from "@/types/Types";
 import Image from "next/image";
-import { Heart } from "lucide-react";
+import { Heart, House, Youtube } from "lucide-react";
 import { getIngredientImage } from "@/utils/actions/getIngreditentImage";
 
 interface PageProps {
@@ -44,6 +44,13 @@ export default function Page({ params }: PageProps) {
 
   return (
     <div className="flex flex-col items-center p-4">
+      <span className="self-stretch flex items-center text-indigo-600 mb-4">
+        <House />
+        <a href="/" className="underline ml-2">
+          {" "}
+          Go back to Home
+        </a>
+      </span>
       <div className="flex flex-col md:flex-row items-start md:items-center gap-8 w-full max-w-4xl">
         <img
           src={data.recipe.strMealThumb}
@@ -52,11 +59,20 @@ export default function Page({ params }: PageProps) {
         />
 
         <div className="flex flex-col gap-4 md:flex-1">
-
           <h1 className="text-2xl font-bold">{data.recipe.strMeal}</h1>
-          
+
           <p>Procedure to make one:</p>
           <p className="text-gray-600 "> {data.recipe.strInstructions}</p>
+
+          <button
+            onClick={() => {
+              window.open(data.recipe.strYoutube, "_blank");
+            }}
+            className="flex group items-center gap-2 border px-4 py-2 rounded hover:bg-indigo-600 hover:text-white transition"
+          >
+            <Youtube className="fill-red-600" />
+            <span> Watch Video on youtube</span>
+          </button>
           <button
             onClick={addToFavourite}
             className="flex items-center gap-2 border px-4 py-2 rounded hover:bg-indigo-600 hover:text-white transition"
@@ -65,11 +81,11 @@ export default function Page({ params }: PageProps) {
             Add to Favourite
           </button>
         </div>
-      </div>  
+      </div>
 
       <div className="w-full max-w-4xl mt-10">
         <h2 className="text-xl font-bold mb-4">Ingredients</h2>
-        <ul className="flex flex-wrap gap-4">
+        <ul className="flex flex-wrap gap-4 min-w-[1000px]">
           {data.recipe.ingredients.map((ingredient, index) => (
             <li
               key={index}
