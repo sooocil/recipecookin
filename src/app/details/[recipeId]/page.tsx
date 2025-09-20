@@ -45,26 +45,27 @@ export default function Page({ params }: PageProps) {
   return (
     <div className="flex flex-col items-center p-4">
       <span className="self-stretch flex items-center text-indigo-600 mb-4">
-        <House />
-        <a href="/" className="underline ml-2">
-          {" "}
+        <House className="text-indigo-600" />
+        <a href="/" className="underline-offset-1  ml-2">
           Go back to Home
         </a>
       </span>
-      <div className="flex flex-col md:flex-row items-start md:items-center gap-8 w-full max-w-4xl">
+      <div className="flex flex-col md:flex-row items-start md:items-center gap-8 w-full max-w-7xl">
         <Image
           width={500}
-          height={400}  
+          height={400}
           src={data.recipe.strMealThumb}
           alt={data.recipe.strMeal}
           className="w-full md:w-1/2 rounded-lg"
         />
 
-        <div className="flex flex-col gap-4 md:flex-1">
+        <div className="flex flex-col   gap-4 ">
           <h1 className="text-2xl font-bold">{data.recipe.strMeal}</h1>
 
-          <p>Procedure to make one:</p>
-          <p className="text-gray-600 "> {data.recipe.strInstructions}</p>
+          <p className="text-2xl">Instruction to make one:</p>
+          <p className="text-gray-600 max-w-5xl space-y-2 whitespace-pre-line">
+            {data.recipe.strInstructions}
+          </p>
 
           <button
             onClick={() => {

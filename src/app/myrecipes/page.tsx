@@ -3,7 +3,7 @@ import MyRecipeCard from "@/Components/my-recipe-card";
 import { useMyRecipeStore } from "@/store/myRecipeStore";
 import React from "react";
 
-const page = () => {
+const MyRecipepage = () => {
   const { myRecipes, removeRecipe } = useMyRecipeStore();
 
   return (
@@ -33,4 +33,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default MyRecipepage;
