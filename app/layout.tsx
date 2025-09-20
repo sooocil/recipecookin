@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import NavBar from "@/Components/NavBar";
-import QueryProvider from "@/Components/QueryProvider";
+import NavBar from "../Components/NavBar";
+import QueryProvider from "../Components/QueryProvider";
 import { Toaster } from "sonner";
 
 const geistMono = Geist_Mono({

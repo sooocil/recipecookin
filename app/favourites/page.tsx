@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import RecipeCard from "@/Components/recipe-card";
+import RecipeCard from "../../Components/recipe-card";
 import { useFavouritesStore } from "@/store/favouriteStore";
 import { getRecipeById } from "@/utils/actions/getRecipeById";
 import { Recipe } from "@/types/Types";

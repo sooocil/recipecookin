@@ -1,5 +1,5 @@
 "use client";
-import MyRecipeCard from "@/Components/my-recipe-card";
+import MyRecipeCard from "../../Components/my-recipe-card";
 import { useMyRecipeStore } from "@/store/myRecipeStore";
 import React from "react";
 

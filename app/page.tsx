@@ -2,9 +2,9 @@
 
 import { useEffect  , useRef, useState } from "react";
 
-import HeroSection from "@/Components/HomeSections/HeroSection";
-import RecipeGrid from "@/Components/HomeSections/RecipeGrid";
-import HomeFooter from "@/Components/HomeSections/footer";
+import HeroSection from "../Components/HomeSections/HeroSection";
+import RecipeGrid from "../Components/HomeSections/RecipeGrid";
+import HomeFooter from "../Components/HomeSections/footer";
 import MyRecipepage from "./myrecipes/page";
 
 export default function Home() {
