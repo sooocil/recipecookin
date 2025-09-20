@@ -7,7 +7,7 @@ import { Recipe } from "@/types/Types";
 import { useQuery } from "@tanstack/react-query";
 
 const FavouritesPage = () => {
-  const { favourites, addFavourite, removeFavourite, clearFavourites } =
+  const { favourites, removeFavourite, clearFavourites } =
     useFavouritesStore();
 
   const clearAllFav = () => {

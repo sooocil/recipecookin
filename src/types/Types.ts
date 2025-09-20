@@ -1,19 +1,5 @@
 import * as z from 'zod';
 
-export const recipeSchema = z.object({
-  idMeal: z.string(),
-  strMeal: z.string(),
-  strCategory: z.string(),
-  strArea: z.string(),
-  strInstructions: z.string(),
-  strMealThumb: z.string(),
-  strYoutube: z.string().optional(),
-  strTags: z.string().optional(),
-  ingredients: z.array(z.object({
-    ingredient: z.string(),
-    measure: z.string()
-  }))
-});
 
 export type Recipe = {
   idMeal: string;
@@ -31,4 +17,23 @@ export type Recipe = {
 
 
 
-export type FormFields = z.infer<typeof recipeSchema>;
+
+export const recipeSchema = z.object({
+  strMeal: z.string().min(1, "Recipe name is required"),
+  strCategory: z.string().min(1, "Category is required"),
+  strArea: z.string().min(1, "Area is required"),
+  strInstructions: z.string().min(1, "Instructions are required"),
+  strMealThumb: z.string().url().optional(),
+  strYoutube: z.string().url().optional(),
+  ingredients: z
+    .array(
+      z.object({
+        ingredient: z.string().min(1, "Ingredient name is required"),
+        measure: z.string().min(1, "Measure is required"),
+      })
+    )
+    .min(1, "At least one ingredient is required"),
+});
+
+export type RecipeFormData = z.infer<typeof recipeSchema>;
+

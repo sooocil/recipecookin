@@ -52,7 +52,9 @@ export default function Page({ params }: PageProps) {
         </a>
       </span>
       <div className="flex flex-col md:flex-row items-start md:items-center gap-8 w-full max-w-4xl">
-        <img
+        <Image
+          width={500}
+          height={400}  
           src={data.recipe.strMealThumb}
           alt={data.recipe.strMeal}
           className="w-full md:w-1/2 rounded-lg"
@@ -92,7 +94,9 @@ export default function Page({ params }: PageProps) {
               className="flex flex-col items-center border p-2 rounded"
             >
               {data.ingredientImages[index] && (
-                <img
+                <Image
+                  width={80}
+                  height={80}
                   src={data.ingredientImages[index]}
                   alt={ingredient.ingredient}
                   className="w-20 h-20 object-cover mb-2 rounded"

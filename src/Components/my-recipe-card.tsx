@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Eye, Trash2 } from "lucide-react";
+import { Eye, Pen, Trash2 } from "lucide-react";
 import { Recipe } from "@/types/Types";
 
 interface RecipeCardProps {
@@ -11,7 +11,7 @@ interface RecipeCardProps {
   onDelete: (idMeal: string) => void;
 }
 
-const RecipeCard = ({ recipe, onDelete }: RecipeCardProps) => {
+const MyRecipeCard = ({ recipe, onDelete }: RecipeCardProps) => {
   const router = useRouter();
 
   return (
@@ -42,12 +42,20 @@ const RecipeCard = ({ recipe, onDelete }: RecipeCardProps) => {
         </p>
         <div className="flex flex-row gap-3 flex-wrap justify-between mt-auto">
           <button
-            onClick={() => router.push(`/details/${recipe.idMeal}`)}
-            className="flex items-center gap-2 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-200 text-sm"
+            onClick={() => router.push(`/myrecipes/details/${recipe.idMeal}`)}
+            className="flex items-center gap-2 bg-blue-600 text-white py-2 px-4 rounded-lg hover:cursor-pointer hover:bg-blue-700 transition-colors duration-200 text-sm"
             aria-label={`View details for ${recipe.strMeal}`}
           >
             <Eye size={16} />
             View Recipe
+          </button>
+          <button
+            onClick={() => router.push(`/myrecipes/update/${recipe.idMeal}`)}
+            className="flex items-center gap-2   py-2 px-4 rounded-lg bg-zinc-300 hover:cursor-pointer transition-colors duration-200 text-sm"
+            aria-label={`Update ${recipe.strMeal}`}
+          >
+            <Pen size={16} />
+            Update
           </button>
           <button
             onClick={() => {
@@ -59,7 +67,7 @@ const RecipeCard = ({ recipe, onDelete }: RecipeCardProps) => {
                 onDelete(recipe.idMeal);
               }
             }}
-            className="flex items-center gap-2 bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition-colors duration-200 text-sm"
+            className="flex items-center gap-2 bg-red-600 text-white py-2 px-4 rounded-lg hover:cursor-pointer hover:bg-red-700 transition-colors duration-200 text-sm"
             aria-label={`Delete ${recipe.strMeal} from favorites`}
           >
             <Trash2 size={16} />
@@ -71,4 +79,4 @@ const RecipeCard = ({ recipe, onDelete }: RecipeCardProps) => {
   );
 };
 
-export default RecipeCard;
+export default MyRecipeCard;

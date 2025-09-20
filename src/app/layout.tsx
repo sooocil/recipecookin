@@ -5,8 +5,6 @@ import NavBar from "@/Components/NavBar";
 import QueryProvider from "@/Components/QueryProvider";
 import { Toaster } from "sonner";
 
-
-
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
@@ -22,19 +20,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-
-
   return (
     <html lang="en">
       <body
+        suppressHydrationWarning
         className={` ${geistMono.variable} antialiased`}
       >
         <NavBar />
 
-        <QueryProvider >
-          {children}
-        </QueryProvider>
+        <QueryProvider>{children}</QueryProvider>
         <Toaster
           position="bottom-center"
           toastOptions={{
