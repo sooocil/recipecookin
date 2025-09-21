@@ -2,16 +2,18 @@ import React from "react";
 
 const HomeFooter = () => {
   return (
-    <div>
-      <footer className="bg-zinc-800  text-white py-4 mt-10">
-        <div className="container mx-auto text-center">
-          <p>
-            &copy; {new Date().getFullYear()} RecipeCookin'. All rights
-            reserved.
-          </p>
-        </div>
-      </footer>
-    </div>
+    <footer className="bg-zinc-900 border-t border-zinc-800 mt-16">
+      <div className="container mx-auto px-4 py-6 flex flex-col sm:flex-row items-center justify-between text-sm text-zinc-400">
+        <p>
+          &copy; {new Date().getFullYear()} RecipeCookin&apos;. All rights
+          reserved.
+        </p>
+        <p>
+          Built with ❤️ by{" "}
+          <span className="font-medium text-white">sooocil (Sushil Regmi)</span>
+        </p>
+      </div>
+    </footer>
   );
 };
 
